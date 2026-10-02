@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pentru Andreea</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg1:#3283FF;--bg2:#8CDDFF;--card:#fff;--ink:#0051FF;--btn:#0051FF;--on:#fff;--line:#64B5FF;--deco:#fff}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#0051FF;--bg2:#2879FF;--card:#1465FF;--ink:#fff;--btn:#fff;--on:#0051FF;--line:#82D3FF;--deco:#8CDDFF}}
+:root[data-theme="dark"]{--bg1:#0051FF;--bg2:#2879FF;--card:#1465FF;--ink:#fff;--btn:#fff;--on:#0051FF;--line:#82D3FF;--deco:#8CDDFF}
+body{margin:0;min-height:100%;display:flex;font:1rem/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;background-color:var(--bg1);background-image:linear-gradient(160deg,var(--bg1),var(--bg2));background-attachment:fixed}
+section{flex:1;min-width:0;max-width:420px;margin:0 auto;padding:10vh 20px;display:flex;flex-direction:column;justify-content:center;gap:16px;position:relative}
+section[hidden]{display:none}
+.card{background:var(--card);color:var(--ink);border-radius:20px;padding:24px;font-size:1.15rem;line-height:1.55;position:relative;z-index:1}
+h1{font-size:1.5rem;line-height:1.25;margin:0 0 8px}
+.btn{position:relative;z-index:1;border:0;border-radius:14px;padding:14px 18px;font:600 1rem system-ui,sans-serif;background:var(--btn);color:var(--on);cursor:pointer}
+.btn:focus-visible,.ans:focus-visible,.t:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+#a{display:grid;gap:10px}
+.ans{border:2px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--card);color:var(--ink);font:600 1rem system-ui,sans-serif;text-align:left;cursor:pointer}
+.ans:disabled{cursor:default}
+.ans.ok{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.ans.no{border-style:dashed;opacity:.6;text-decoration:line-through}
+#bar{display:flex;gap:6px}
+#bar i{flex:1;height:8px;border-radius:4px;background:var(--card);opacity:.45;transition:opacity .3s}
+#bar i.on{opacity:1}
+#g{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;aspect-ratio:1;margin-top:14px}
+.t{border:0;border-radius:12px;color:#fff;font:700 1.8rem system-ui,sans-serif;cursor:pointer}
+.t.e{background:none;border:2px dashed var(--line)}
+.sticker{align-self:center;transform:rotate(-5deg);background:#fff;color:#0051FF;border:3px dashed #0051FF;border-radius:22px;padding:18px 22px;text-align:center;box-shadow:0 0 0 6px #fff;font-weight:600;line-height:1.4;z-index:1}
+.sticker b{display:block;font-size:1.6rem;margin-top:6px}
+.deco{position:absolute;color:var(--deco);opacity:.6;pointer-events:none;font-weight:700;animation:fl 7s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-8px) rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){.deco{animation:none}#bar i{transition:none}}
+</style>
+</head>
+<body>
+<section id="s0">
+  <div class="card">Andreea ești simplistă ca și matematică de până ce de liceu dar și frumoasă ca și în exercițiul la testul de matematică, te felicităm cu 8 martie</div>
+  <button class="btn" onclick="go(1)">Începem</button>
+</section>
+
+<section id="s1" hidden>
+  <div id="bar" aria-label="Progres"><i></i><i></i><i></i></div>
+  <div class="card" id="q"></div>
+  <div id="a"></div>
+</section>
+
+<section id="s2" hidden>
+  <div class="card">Aproape gata! Pune numerele în ordine, de la 1 la 8.
+    <div id="g"></div>
+  </div>
+  <div id="win" hidden>
+    <div class="card" style="margin-bottom:16px">Bravo, Andreea!</div>
+    <button class="btn" style="width:100%" onclick="go(3)">Mai departe</button>
+  </div>
+</section>
+
+<section id="s3" hidden>
+  <div class="card"><h1>La mulți ani, Andreea!</h1>Te felicităm cu 8 Martie!</div>
+  <div class="sticker">Se dă: Andreea.<br>Să se arate că e frumoasă.<b>Q.E.D. 10/10</b></div>
+</section>
+
+<script>
+const $=s=>document.querySelector(s),P=[...document.querySelectorAll('section')];
+const go=n=>{P.forEach((p,i)=>p.hidden=i!==n);scrollTo(0,0)};
+
+// small design elements on page 1
+'π∑√∫+=÷♥x²∞Δθ'.match(/x²|./gu).forEach((c,i)=>{
+  const d=document.createElement('span');d.className='deco';d.textContent=c;d.setAttribute('aria-hidden','true');
+  d.style.cssText=`left:${(i*37)%84+4}%;top:${(i*53)%68+14}%;font-size:${1.2+(i%4)*.5}rem;animation-delay:${i*-.6}s`;
+  $('#s0').append(d);
+});
+
+// quiz: 3 questions + 9 reserve ones (a wrong answer brings a reserve question)
+const Q=[
+["lim (x→∞) (1 + 1/x)ˣ = ?",["1","e","∞","0"],1],
+["Derivata funcției f(x) = x³ este:",["3x²","x²","3x","x⁴/4"],0],
+["Determinantul matricei [2 1; 3 4] este:",["11","5","8","−5"],1],
+["Dacă f(x) = sin x, atunci f′(x) = ?",["−sin x","−cos x","cos x","tg x"],2],
+["lim (x→0) (sin x)/x = ?",["0","∞","1","π"],2],
+["Derivata funcției f(x) = ln x este:",["x","1/x","eˣ","(ln x)/x"],1],
+["Determinantul matricei identitate [1 0; 0 1] este:",["0","2","1","−1"],2],
+["lim (x→∞) 1/x = ?",["∞","1","−1","0"],3],
+["Dacă f(x) = eˣ, atunci f′(x) = ?",["x·eˣ","eˣ","eˣ⁻¹","e"],1],
+["Derivata unei constante, f(x) = 5, este:",["5","1","0","x"],2],
+["Derivata funcției f(x) = x² + 3x este:",["2x + 3","x + 3","2x","x² + 3"],0],
+["Panta tangentei la graficul lui f(x) = x² în x = 1 este:",["1","2","0","3"],1]];
+let cell=0,pool=Q.slice(3),cur=Q[0];
+function show(){
+  $('#q').textContent=cur[0];const a=$('#a');a.innerHTML='';
+  cur[1].forEach((t,i)=>{const b=document.createElement('button');b.className='ans';b.textContent=t;b.onclick=()=>pick(b,i);a.append(b)});
+}
+function pick(b,i){
+  const ok=i===cur[2];
+  [...$('#a').children].forEach((x,j)=>{x.disabled=true;if(j===cur[2])x.classList.add('ok')});
+  if(ok)$('#bar').children[cell].classList.add('on');else b.classList.add('no');
+  setTimeout(()=>{
+    if(ok){cell++;if(cell===3){go(2);return}cur=Q[cell]}
+    else if(pool.length)cur=pool.shift();
+    show();
+  },1000);
+}
+show();
+
+// puzzle: 3x3 sliding tiles
+const C=['#0051FF','#0A5BFF','#1465FF','#1E6FFF','#2879FF','#3283FF','#3C8DFF','#4697FF'];
+let T=[1,2,3,4,5,6,7,8,0];
+function mv(i){const e=T.indexOf(0);if(Math.abs((i/3|0)-(e/3|0))+Math.abs(i%3-e%3)===1){[T[i],T[e]]=[T[e],T[i]];return 1}}
+for(let k=0;k<80;k++){const e=T.indexOf(0);const n=[e-3,e+3,e%3?e-1:-1,e%3<2?e+1:-1].filter(x=>x>=0&&x<9);mv(n[Math.random()*n.length|0])}
+function draw(){
+  const g=$('#g');g.innerHTML='';
+  T.forEach((n,i)=>{const b=document.createElement('button');b.className=n?'t':'t e';b.disabled=!n;
+    if(n){b.textContent=n;b.style.background=C[n-1];b.onclick=()=>{if(mv(i)){draw();if(T.every((v,j)=>v===(j+1)%9))$('#win').hidden=false}}}
+    g.append(b)});
+}
+draw();
+</script>
+</body>
+</html>
